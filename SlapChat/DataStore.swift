@@ -12,7 +12,7 @@ import CoreData
 class DataStore {
     
     static let sharedInstance = DataStore()
-    
+    var messages = [Message]()
     private init() {}
     
     // MARK: - Core Data stack
@@ -59,5 +59,22 @@ class DataStore {
             }
         }
     }
+    
+    func fetchData() {
+        
+        let managedContext = self.persistentContainer.viewContext
+        let request = NSFetchRequest<Message>(entityName: "Message")
+        
+        do {
+            self.messages = try managedContext.fetch(request)
+        } catch let error {
+            print(error)
+        }
+        
+    }
+    
+    
+    
+    
     
 }
